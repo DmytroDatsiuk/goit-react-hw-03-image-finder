@@ -5,7 +5,6 @@ import { PicturesDataView } from 'components/Murkup/PicturesDataView';
 export class ImageGaleryItem extends Component {
   state = {
     pictures: [],
-
     status: 'idle',
   };
 
