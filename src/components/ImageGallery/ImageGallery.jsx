@@ -21,6 +21,7 @@ export class ImageGalery extends Component {
   async componentDidUpdate(prevProps, prevState) {
     const prevName = prevProps.searchQuery;
     const nextName = this.props.searchQuery;
+    const { page } = this.state;
 
     if (prevName !== nextName) {
       this.setState({
@@ -45,19 +46,13 @@ export class ImageGalery extends Component {
       }
     }
 
-    if (
-      prevState.page !== this.state.page &&
-      this.state.page !== 1
-    ) {
+    if (prevState.page !== page && page !== 1) {
       this.setState({
         isLoading: true,
       });
 
       try {
-        const pictures = await GetPictures(
-          nextName,
-          this.state.page
-        );
+        const pictures = await GetPictures(nextName, page);
 
         this.setState(prevState => ({
           pictures: [
