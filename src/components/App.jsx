@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-
-import { Button } from './Button/Button';
 import { GlobalStyle } from './Global.styled';
 import { ImageGalery } from './ImageGallery/ImageGallery';
 import { Layout } from './Layout';
-import { Loader } from './Loader/Loader';
 import { Modal } from './Modal/Modal';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ToastContainer } from 'react-toastify';
@@ -38,8 +35,7 @@ export class App extends Component {
           onModal={this.toogleModal}
           searchQuery={searchQuery}
         />
-        <Button />
-        <Loader />
+
         {showModal && (
           <Modal onClose={this.toogleModal} url={url} />
         )}

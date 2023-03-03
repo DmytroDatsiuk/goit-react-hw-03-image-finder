@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import {
   SearchBarHeader,
-  SearchForm,
+  Form,
   SearchFormButton,
   SearchFormButtonLabel,
-  SearchFormInput,
+  Field,
 } from './Searchbar.styled';
 import { FcSearch } from 'react-icons/fc';
 import { toast } from 'react-toastify';
+import { Formik } from 'formik';
+import PropTypes from 'prop-types';
 
 export class Searchbar extends Component {
   state = {
@@ -37,23 +39,29 @@ export class Searchbar extends Component {
     const { handleSubmit, handleSearchQueryChange } = this;
     return (
       <SearchBarHeader>
-        <SearchForm onSubmit={handleSubmit}>
-          <SearchFormButton type="submit">
-            <FcSearch />
-            <SearchFormButtonLabel>
-              Search
-            </SearchFormButtonLabel>
-          </SearchFormButton>
-          <SearchFormInput
-            type="text"
-            autocomplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            value={searchQuery}
-            onChange={handleSearchQueryChange}
-          />
-        </SearchForm>
+        <Formik initialValues={{ search: '' }}>
+          <Form onSubmit={handleSubmit}>
+            <SearchFormButton type="submit">
+              <FcSearch />
+              <SearchFormButtonLabel>
+                Search
+              </SearchFormButtonLabel>
+            </SearchFormButton>
+            <Field
+              type="text"
+              name="search"
+              autoFocus
+              placeholder="Search images and photos"
+              value={searchQuery}
+              onChange={handleSearchQueryChange}
+            />
+          </Form>
+        </Formik>
       </SearchBarHeader>
     );
   }
 }
+
+Searchbar.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+};
