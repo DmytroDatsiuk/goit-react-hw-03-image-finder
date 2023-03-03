@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { ImageGaleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
-import { ImageGallery } from './ImageGallery.styled';
+import {
+  Descripton,
+  ImageGallery,
+} from './ImageGallery.styled';
 import { GetPictures } from 'components/Services/Api';
 import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
@@ -81,16 +84,22 @@ export class ImageGalery extends Component {
     const { searchQuery, onModal } = this.props;
 
     if (status === 'rejectedSearch') {
-      return <h1>{searchQuery} is wrong search...</h1>;
+      return (
+        <Descripton>
+          {searchQuery} is wrong search...
+        </Descripton>
+      );
     }
 
     if (status === 'rejected') {
-      return <h1>Something wrong...</h1>;
+      return <Descripton>Something wrong...</Descripton>;
     }
 
     return (
       <>
-        {status === 'idle' && <div>Input Search Query</div>}
+        {status === 'idle' && (
+          <Descripton>Please Input Search Query</Descripton>
+        )}
         {status === 'resolve' && (
           <>
             {' '}
