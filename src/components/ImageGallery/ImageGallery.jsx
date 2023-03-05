@@ -23,34 +23,7 @@ export class ImageGalery extends Component {
     const nextName = this.props.searchQuery;
     const { page } = this.state;
 
-    if (prevName !== nextName) {
-      this.setState({
-        status: 'panding',
-        pictures: null,
-        page: 1,
-        isLoading: false,
-      });
-
-      try {
-        const picturesData = await GetPictures(nextName, 1);
-
-        this.setState({
-          pictures: picturesData.hits,
-          status: 'resolve',
-        });
-        if (picturesData.total === 0) {
-          this.setState({ status: 'rejectedSearch' });
-        }
-      } catch (error) {
-        this.setState({ status: 'rejected' });
-      }
-    }
-
-    if (prevState.page !== page && page !== 1) {
-      this.setState({
-        isLoading: true,
-      });
-
+    if (prevName !== nextName || prevState.page !== page) {
       try {
         const picturesData = await GetPictures(
           nextName,
@@ -77,27 +50,12 @@ export class ImageGalery extends Component {
   render() {
     const { pictures, status, isLoading } = this.state;
     const { searchQuery, onModal } = this.props;
-
-    if (status === 'rejectedSearch') {
-      return (
-        <Descripton>
-          {searchQuery} is wrong search...
-        </Descripton>
-      );
-    }
-
-    if (status === 'rejected') {
-      return <Descripton>Something wrong...</Descripton>;
-    }
+    console.log(pictures);
 
     return (
       <>
-        {status === 'idle' && (
-          <Descripton>Please Input Search Query</Descripton>
-        )}
-        {pictures && (
+        {pictures.length !== 0 && (
           <>
-            {' '}
             <ImageGallery>
               <ImageGaleryItem
                 onModal={onModal}
@@ -112,6 +70,18 @@ export class ImageGalery extends Component {
           </>
         )}
         {status === 'panding' && <Loader />}
+        {status === 'idle' && (
+          <Descripton>Please Input Search Query</Descripton>
+        )}
+        {status === 'rejectedSearch' && (
+          <Descripton>
+            {searchQuery} is wrong search...
+          </Descripton>
+        )}
+
+        {status === 'rejected' && (
+          <Descripton>Something wrong...</Descripton>
+        )}
       </>
     );
   }
