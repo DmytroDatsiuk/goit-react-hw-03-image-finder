@@ -27,6 +27,7 @@ export class App extends Component {
 
   render() {
     const { showModal, searchQuery, url } = this.state;
+    console.log(searchQuery);
     return (
       <Layout>
         <GlobalStyle />
