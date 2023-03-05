@@ -26,19 +26,19 @@ export class ImageGalery extends Component {
     if (prevName !== nextName) {
       this.setState({
         status: 'panding',
-        pictures: [],
+        pictures: null,
         page: 1,
         isLoading: false,
       });
 
       try {
-        const pictures = await GetPictures(nextName, 1);
+        const picturesData = await GetPictures(nextName, 1);
 
         this.setState({
-          pictures: pictures.hits,
+          pictures: picturesData.hits,
           status: 'resolve',
         });
-        if (pictures.total === 0) {
+        if (picturesData.total === 0) {
           this.setState({ status: 'rejectedSearch' });
         }
       } catch (error) {
@@ -52,13 +52,13 @@ export class ImageGalery extends Component {
       });
 
       try {
-        const pictures = await GetPictures(nextName, page);
+        const picturesData = await GetPictures(
+          nextName,
+          page
+        );
 
-        this.setState(prevState => ({
-          pictures: [
-            ...prevState.pictures,
-            ...pictures.hits,
-          ],
+        this.setState(({ pictures }) => ({
+          pictures: [...pictures, ...picturesData.hits],
           status: 'resolve',
           isLoading: false,
         }));
@@ -95,7 +95,7 @@ export class ImageGalery extends Component {
         {status === 'idle' && (
           <Descripton>Please Input Search Query</Descripton>
         )}
-        {status === 'resolve' && (
+        {pictures && (
           <>
             {' '}
             <ImageGallery>
