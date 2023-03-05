@@ -4,7 +4,7 @@ import {
   Descripton,
   ImageGallery,
 } from './ImageGallery.styled';
-import { GetPictures } from 'components/Services/Api';
+import { GetPictures } from 'Services/Api';
 import { Button } from 'components/Button/Button';
 import { Loader } from 'components/Loader/Loader';
 import PropTypes from 'prop-types';
