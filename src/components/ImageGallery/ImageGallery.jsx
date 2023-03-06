@@ -26,7 +26,7 @@ export class ImageGalery extends Component {
     if (prevName !== nextName) {
       this.setState({
         status: 'panding',
-        pictures: null,
+        pictures: [],
         page: 1,
         isLoading: false,
       });
